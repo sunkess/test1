@@ -45,6 +45,26 @@ public class Store : MonoBehaviour
     void Set_StoreLv()
     {
         store_lv.text = storeData.lv;
+        Set_Tile();
+    }
+
+
+    void Set_Tile()
+    {
+        GameObject tileParent = new GameObject("tileParent");
+
+        for (int y = 0; y < storeData.y; y++)
+        {
+            for (int x = 0; x < storeData.x; x++)
+            {
+                GameObject tile = new GameObject("tile");
+                tile.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Tiles/Square");
+                tile.GetComponent<SpriteRenderer>().sortingLayerName = "Tile";
+                tile.transform.position = new Vector2(x, -y);
+                tile.transform.parent = tileParent.transform;
+                tileParent.transform.parent = transform;
+            }
+        }
     }
 
 }

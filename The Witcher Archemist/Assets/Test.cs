@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Test : MonoBehaviour
 {
@@ -7,6 +9,8 @@ public class Test : MonoBehaviour
     public List<GameObject> tiles = new List<GameObject>();
     public int width = 4;
     public int height = 4;
+
+    public List<GameObject> matchTiles = new List<GameObject>();
 
 
     private void Start()
@@ -17,8 +21,20 @@ public class Test : MonoBehaviour
             var y = i / width;
             GameObject obj = Instantiate(prefab, new Vector2(x, -y), Quaternion.identity);//new GameObject("tile");
             obj.transform.parent = transform;
-            TestTile tile = obj.AddComponent<TestTile>();
-            tile.count = Random.Range(1, 7);
+
+            int randomTile = Random.Range(0, 10);
+            if(randomTile == 0)
+            {
+                TestTile block = obj.AddComponent<TestTile>();
+                obj.name = "booster";
+            }
+            else
+            {
+                TestBlock block = obj.AddComponent<TestBlock>();
+                block.count = Random.Range(1, 7);
+            }
+
+            
             tiles.Add(obj);
         }
     }
@@ -27,47 +43,100 @@ public class Test : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-             var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            clear();
+            var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
             if (hit)
             {
+                int count = hit.collider.GetComponent<TestTile>().count;
                 search(hit.collider.gameObject);
             }
         }
+
+        
     }
 
-    public struct Pos
+    void search(GameObject obj)
     {
-        public int x;
-        public int y;
-    }
+        var idx = tiles.FindIndex(x => x == obj);
 
-    void search(GameObject hit)
-    {
-        var idx = tiles.FindIndex(x => x == hit);
+        int count = tiles[idx].GetComponent<TestTile>().count;
 
         int i = idx % width;
         int j = idx / width;
 
-        Pos origin = new Pos { x = i, y = j};
-        Pos left = new Pos { x = i - 1, y = j};
-        Pos right = new Pos { x = i + 1, y = j};
-        Pos top = new Pos { x = i, y = j - 1};
-        Pos down = new Pos { x = i, y = j + 1};
+        TestTile leftUp = new TestTile { pos = new Pos(i - 1, j - 1) };
+        TestTile left = new TestTile { pos = new Pos(i - 1, j)};
+        TestTile leftDown = new TestTile { pos = new Pos(i - 1, j + 1)};
 
-        Debug.Log(origin.x + " " + origin.y);
-        Debug.Log(left.x + " " + left.y);
-        Debug.Log(right.x + " " + right.y);
-        Debug.Log(top.x + " " + top.y);
-        Debug.Log(down.x + " " + down.y);
+        TestTile rightUp = new TestTile { pos = new Pos(i + 1, j - 1) };
+        TestTile right = new TestTile { pos = new Pos(i + 1, j)};
+        TestTile rightDown = new TestTile { pos = new Pos(i + 1, j + 1)};
 
-        List<Pos> poss = new List<Pos> { left, right, top, down };
+        TestTile top = new TestTile { pos = new Pos(i, j - 1)};
 
-        for (int k = 0; k < poss.Count; k++)
+        TestTile down = new TestTile { pos = new Pos(i, j + 1)};
+
+
+        List<TestTile> tilesPos = new List<TestTile>();
+
+        tilesPos.Add(leftUp);
+        tilesPos.Add(left);
+        tilesPos.Add(leftDown);
+        tilesPos.Add(rightUp);
+        tilesPos.Add(right);
+        tilesPos.Add(rightDown);
+        tilesPos.Add(top);
+        tilesPos.Add(down);
+
+        //중복 방지를 위해 오버플로 방지
+        if(!matchTiles.Contains(obj))
+            matchTiles.Add(obj);
+
+        for (int k = 0; k < tilesPos.Count; k++)
         {
-            if(poss[k].x >= 0 && poss[k].x < width && poss[k].y >= 0 && poss[k].y < width)
-                Debug.Log("반복문 " + poss[k].x + " " + poss[k].y );
+            if(IsVaildTile(tilesPos, k))
+            {
+                var index = (width * tilesPos[k].pos.y) + tilesPos[k].pos.x;
+
+                GameObject tile = tiles[index];
+
+                //재귀함수를 벗어날수 있게 해줍니다.
+                if (tile.GetComponent<TestBlock>())
+                {
+                    //상하좌우 검사
+                    if (count == tile.GetComponent<TestTile>().count && !matchTiles.Contains(tile))
+                    {
+                        search(tile);
+                    }
+                }
+            }
         }
 
+        //여기부터 같은 타일들을 보여주는 효과를 줍니다.
+        if (matchTiles.Count > 2)
+        {
+            for (int l = 0; l < matchTiles.Count; l++)
+            {
+                int a = tiles.FindIndex(x => x == matchTiles[l]);
+                matchTiles[l].GetComponent<SpriteRenderer>().color = Color.red;
+            }
+        }
+
+    }
+
+    bool IsVaildTile(List<TestTile> tilesPos, int k)
+    {
+        return tilesPos[k].pos.x >= 0 && tilesPos[k].pos.x < width &&
+                tilesPos[k].pos.y >= 0 && tilesPos[k].pos.y < height;
+    }
+
+    void clear()
+    {
+        for (int i = 0; i < matchTiles.Count; i++)
+        {
+            matchTiles[i].GetComponent<SpriteRenderer>().color = Color.white;
+        }
+        matchTiles.Clear();
     }
 }
