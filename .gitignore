@@ -1,1 +1,7 @@
 The Witcher Archemist/Library/
+The Witcher Archemist/Temp/
+The Witcher Archemist/obj/
+
+Assembly-CSharp.csproj
+Assembly-CSharp-Editor.csproj
+The Witcher Archemist.sln
