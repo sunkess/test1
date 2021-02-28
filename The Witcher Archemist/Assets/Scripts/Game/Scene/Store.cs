@@ -13,6 +13,8 @@ public class Store : MonoBehaviour
 {
     public StoreData storeData;
 
+    public GameObject tiles;
+
     public Text store_lv;
 
     private void Start()
@@ -20,6 +22,8 @@ public class Store : MonoBehaviour
         storeData = SaveManager.LevelLoad<StoreData>(storeData, 1);
 
         Set_StoreLv();
+
+        Debug.Log(Mathf.Sin(1.57080374f));
     }
 
     private void Update()
@@ -51,7 +55,10 @@ public class Store : MonoBehaviour
 
     void Set_Tile()
     {
+        DeleteTile();
+
         GameObject tileParent = new GameObject("tileParent");
+        tiles = tileParent;
 
         for (int y = 0; y < storeData.y; y++)
         {
@@ -60,11 +67,17 @@ public class Store : MonoBehaviour
                 GameObject tile = new GameObject("tile");
                 tile.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Tiles/Square");
                 tile.GetComponent<SpriteRenderer>().sortingLayerName = "Tile";
-                tile.transform.position = new Vector2(x, -y);
+                tile.GetComponent<SpriteRenderer>().color = new Color(0.7452f, 0.6065f, 0.1652f, 1);
+                tile.transform.position = new Vector2(x, y);
                 tile.transform.parent = tileParent.transform;
                 tileParent.transform.parent = transform;
             }
         }
+    }
+
+    void DeleteTile()
+    {
+        Destroy(tiles);
     }
 
 }

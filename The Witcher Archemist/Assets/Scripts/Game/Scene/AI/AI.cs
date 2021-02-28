@@ -7,7 +7,8 @@ public class AI : MonoBehaviour
     public Transform[] target_Position;
     public Transform target;
 
-    public int target_Count = 0;
+    
+    private int target_Count = 0;
 
     protected float last_y;
 
