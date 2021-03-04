@@ -6,7 +6,7 @@ public class Move_Help
 {
     public static void sortingSet(SpriteRenderer sr, Transform transform, float sort)
     {
-        sr.sortingOrder = (int)(-sort * 10);
+        sr.sortingOrder = (int)(-sort * 100);
     }
 
     public static  void Set_Flip(SpriteRenderer sr,Vector2 normalized)
