@@ -21,6 +21,8 @@ public class Store : MonoBehaviour
 
     public GameObject furniture;
 
+    public GameSceneData gameSceneData;
+
     private void Start()
     {
         storeData = SaveManager.LevelLoad<StoreData>(storeData, 1);
@@ -103,25 +105,31 @@ public class Store : MonoBehaviour
                     if((x == 0 && y == 0))
                     {
                         tile.name = "Left_Top_Wall";
-                        tile.GetComponent<SpriteRenderer>().sprite = tileWall[0];
+                        //tile.GetComponent<SpriteRenderer>().sprite = tileWall[0];
+                        tile.GetComponent<SpriteRenderer>().sprite = tileWall[3];
                     }
                     //오른쪽 위 타일
                     else if((x == storeData.x - 1 && y == 0))
                     {
                         tile.name = "Right_Top_Wall";
-                        tile.GetComponent<SpriteRenderer>().sprite = tileWall[0];
+                        //tile.GetComponent<SpriteRenderer>().sprite = tileWall[0];
+                        tile.GetComponent<SpriteRenderer>().sprite = tileWall[3];
                     }
                     //왼쪽 아래 타일
                     else if ((x == 0 && y == storeData.y - 1))
                     {
                         tile.name = "Left_Bottom_Wall";
-                        tile.GetComponent<SpriteRenderer>().sprite = tileWall[2];
+                        //tile.GetComponent<SpriteRenderer>().sprite = tileWall[2];
+                        tile.GetComponent<SpriteRenderer>().sprite = tileWall[3];
+
                     }
                     //오른쪽 아래 타일
                     else if ((x == storeData.x - 1 && y == storeData.y - 1))
                     {
                         tile.name = "Right_Bottom_Wall";
-                        tile.GetComponent<SpriteRenderer>().sprite = tileWall[2];
+                        //tile.GetComponent<SpriteRenderer>().sprite = tileWall[2];
+                        tile.GetComponent<SpriteRenderer>().sprite = tileWall[3];
+
                     }
                     tile.AddComponent<BoxCollider2D>().isTrigger = false;
 
@@ -130,7 +138,8 @@ public class Store : MonoBehaviour
                 else if(0 < x && x < storeData.x - 1 && y < wall_height)
                 {
                     tile.name = "Middle_Wall";
-                    tile.GetComponent<SpriteRenderer>().sprite = tileWall[3];
+                    //tile.GetComponent<SpriteRenderer>().sprite = tileWall[3];
+                    tile.GetComponent<SpriteRenderer>().sprite = tileWall[1];
                     tile.AddComponent<BoxCollider2D>().isTrigger = false;
                 }
                 //벽 왼쪽 타일, 벽 오른쪽 타일
@@ -139,13 +148,15 @@ public class Store : MonoBehaviour
                     if((x == 0 && y > 0))
                     {
                         tile.name = "Left_Middle_Wall";
-                        tile.GetComponent<SpriteRenderer>().sprite = tileWall[1];
+                        //tile.GetComponent<SpriteRenderer>().sprite = tileWall[1];
+                        tile.GetComponent<SpriteRenderer>().sprite = tileWall[3];
                         tile.AddComponent<BoxCollider2D>().isTrigger = false;
                     }
                     else if((x == storeData.x - 1) && y < storeData.y)
                     {
                         tile.name = "Right_Middle_Wall";
-                        tile.GetComponent<SpriteRenderer>().sprite = tileWall[1];
+                        //tile.GetComponent<SpriteRenderer>().sprite = tileWall[1];
+                        tile.GetComponent<SpriteRenderer>().sprite = tileWall[3];
                         tile.AddComponent<BoxCollider2D>().isTrigger = false;
                     }
                     
