@@ -78,7 +78,7 @@ public class Store : MonoBehaviour
 
         GameObject storeTile = new GameObject("StoreTile");
 
-        Sprite[] tileGroundSprites = Resources.LoadAll<Sprite>("Tiles/shop_tile");
+        Sprite[] tileGroundSprites = Resources.LoadAll<Sprite>("Tiles/shop_tile_v2");
         Sprite[] tileWall = Resources.LoadAll<Sprite>("Tiles/shop_entire_tile");
 
         int wall_height = 3;

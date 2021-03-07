@@ -8,9 +8,14 @@ public class GameSceneData : MonoBehaviour
     public List<Sprite[]> arrayTiles = new List<Sprite[]>();
     public List<Sprite> tiles2 = new List<Sprite>();
 
+    private void Start()
+    {
+        Set();
+    }
+
     public void Set()
     {
-        arrayTiles.Add(Resources.LoadAll<Sprite>("Tiles/shop_tile"));
+        arrayTiles.Add(Resources.LoadAll<Sprite>("Tiles/shop_tile_v2"));
         arrayTiles.Add(Resources.LoadAll<Sprite>("Tiles/shop_entire_tile"));
 
         foreach (var tiles in arrayTiles)
@@ -26,10 +31,12 @@ public class GameSceneData : MonoBehaviour
             tileToName.Add(tile.name, tile);
         }
 
-        for (int i = 0; i < tileToName.Count; i++)
-        {//`````````````````
-            //Debug.Log(tileToName[]);
-        }
+        Debug.Log(tileToName["shop_tile_v2_0"]);
+        Debug.Log(tileToName.Count);
+        //for (int i = 0; i < tileToName.Count; i++)
+        //{
+        //    Debug.Log(tileToName[i].name);
+        //}
         
     }
 }
