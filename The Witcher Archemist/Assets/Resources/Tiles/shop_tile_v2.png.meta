@@ -4,13 +4,13 @@ TextureImporter:
   internalIDToNameTable:
   - first:
       213: -7105171773198168920
-    second: shop_tile_v2_0
+    second: Shop_Ground_Left
   - first:
       213: -5577636329925887054
-    second: shop_tile_v2_1
+    second: Shop_Ground_Middle
   - first:
       213: -4070186306370356333
-    second: shop_tile_v2_2
+    second: Shop_Ground_Right
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -108,7 +108,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: shop_tile_v2_0
+      name: Shop_Ground_Left
       rect:
         serializedVersion: 2
         x: 0
@@ -129,7 +129,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shop_tile_v2_1
+      name: Shop_Ground_Middle
       rect:
         serializedVersion: 2
         x: 32
@@ -150,7 +150,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shop_tile_v2_2
+      name: Shop_Ground_Right
       rect:
         serializedVersion: 2
         x: 64
