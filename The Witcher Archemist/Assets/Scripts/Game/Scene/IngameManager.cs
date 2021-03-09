@@ -12,8 +12,12 @@ public class IngameManager : MonoBehaviour
     public GameObject stuff;
 
     public GameObject IdleMode;
-    public GameObject PlaceMode;
+    public GameObject placeMode;
     public GameObject ChooseMode;
+
+    public GameObject playerUI;
+
+    public GameObject player;
 
     private void Awake()
     {
@@ -69,7 +73,7 @@ public class IngameManager : MonoBehaviour
                 {
                     //현재 가구를 배치하려고 할때
                     if (stuff)
-                        Set_Furniture();
+                        Set_Stuff();
 
                 }else if (_stuff)
                 {
@@ -78,7 +82,7 @@ public class IngameManager : MonoBehaviour
             }
         }
 
-        Furniture_Move_Pos();
+        Stuff_Move_Pos();
 
     }
 
@@ -94,9 +98,11 @@ public class IngameManager : MonoBehaviour
 
         IdleMode.SetActive(false);
         ChooseMode.SetActive(true);
+
+        playerUI.SetActive(false);
     }
 
-    public void Set_Furniture()
+    public void Set_Stuff()
     {
         if (!stuff.GetComponent<Stuff>())
         {
@@ -106,13 +112,15 @@ public class IngameManager : MonoBehaviour
         stuff.AddComponent<BoxCollider2D>();
 
         IdleMode.SetActive(true);
-        PlaceMode.SetActive(false);
+        placeMode.SetActive(false);
         ChooseMode.SetActive(false);
+
+        playerUI.SetActive(true);
 
         stuff = null;
     }
 
-    public void IdleMode_FurniturePlace()
+    public void IdleMode_PlaceButton()
     {
         GameObject _stuff = new GameObject("stuff");
         _stuff.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Furniture/Table");
@@ -120,19 +128,21 @@ public class IngameManager : MonoBehaviour
         stuff = _stuff;
 
         IdleMode.SetActive(false);
-        PlaceMode.SetActive(true);
+        placeMode.SetActive(true);
+
+        playerUI.SetActive(false);
     }
 
-    public void Furniture_Move_Pos()
+    public void Stuff_Move_Pos()
     {
         if (stuff)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            stuff.transform.position = FurniturePos(mousePos);
+            stuff.transform.position = StuffPos(mousePos);
         }
     }
 
-    Vector2 FurniturePos(Vector2 abcd)
+    Vector2 StuffPos(Vector2 abcd)
     {
         float x = (float)Math.Round(abcd.x);
         float y = (float)Math.Round(abcd.y);
@@ -146,7 +156,9 @@ public class IngameManager : MonoBehaviour
         stuff = null;
 
         IdleMode.SetActive(true);
-        PlaceMode.SetActive(false);
+        placeMode.SetActive(false);
+
+        playerUI.SetActive(true);
     }
 
     public void ChooseMode_Retrieve()
@@ -156,6 +168,8 @@ public class IngameManager : MonoBehaviour
 
         IdleMode.SetActive(true);
         ChooseMode.SetActive(false);
+
+        playerUI.SetActive(true);
     }
 
     public void ChooseMode_Cancle()
@@ -165,5 +179,7 @@ public class IngameManager : MonoBehaviour
 
         IdleMode.SetActive(true);
         ChooseMode.SetActive(false);
+
+        playerUI.SetActive(true);
     }
 }

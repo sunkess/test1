@@ -141,7 +141,7 @@ public class House : MonoBehaviour
                 {
                     tile.name = "shop_entire_tile_Wall";
                     tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["shop_entire_tile_Wall"];
-                    tile.AddComponent<BoxCollider2D>().isTrigger = true;
+                    tile.AddComponent<BoxCollider2D>().isTrigger = false;
                     tile.AddComponent<Tile>();
                 }
                 //뒷 벽
@@ -149,7 +149,7 @@ public class House : MonoBehaviour
                 {
                     tile.name = "shop_entire_tile_Back";
                     tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["shop_entire_tile_Back"];
-                    tile.AddComponent<BoxCollider2D>().isTrigger = true;
+                    tile.AddComponent<BoxCollider2D>().isTrigger = false;
                     tile.AddComponent<Tile>();
                 }
                 
