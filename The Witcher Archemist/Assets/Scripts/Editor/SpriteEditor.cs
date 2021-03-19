@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SpriteEditor : EditorWindow
 {
-    public HouseData storedata = new HouseData();
+    public LVHouseData storedata = new LVHouseData();
 
     [MenuItem("Tools/CreateLevel", false, 0)]
     private static void init()

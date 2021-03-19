@@ -16,4 +16,8 @@ public class GameManager : MonoBehaviour
 
         instance = this;
     }
+    private void Start()
+    {
+        GameData.NameToSprite();
+    }
 }

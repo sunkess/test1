@@ -19,17 +19,6 @@ public class GameData
             string spriteName = Methods.String_Cut_Char(Convert.ToString(sprites[i]), ' ');
             tileToName.Add(spriteName, sprites[i] as Sprite);
         }
-        //foreach (Sprite sprite in sprites)
-        //{
-        //    string spriteName = Methods.String_Cut_Char(Convert.ToString(sprite), ' ');
-        //    tileToName.Add(spriteName, sprite);
-        //}
-
-        //string spriteName = Methods.String_Cut_Char(Convert.ToString(sprites[1]), ' ');
-
-        
-
-        //Debug.Log(tileToName["shop_entire_tile_0"]);
 
     }
 }

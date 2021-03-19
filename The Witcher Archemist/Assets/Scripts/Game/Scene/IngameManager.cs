@@ -19,6 +19,8 @@ public class IngameManager : MonoBehaviour
 
     public GameObject player;
 
+    public GameObject counter;
+
     private void Awake()
     {
         if(instance != null)

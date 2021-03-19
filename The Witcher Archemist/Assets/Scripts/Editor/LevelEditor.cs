@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class LevelEditor : EditorWindow
 {
-    public HouseData storedata = new HouseData();
+    public LVHouseData storedata = new LVHouseData();
 
     [MenuItem("Tools/CreateLevel", false, 0)]
     private static void init()
@@ -133,7 +133,7 @@ public class LevelEditor : EditorWindow
         {
             string json = File.ReadAllText(path);
 
-            storedata = JsonUtility.FromJson<HouseData>(json);
+            storedata = JsonUtility.FromJson<LVHouseData>(json);
             Draw();
         }
     }

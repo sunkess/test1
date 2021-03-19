@@ -39,7 +39,7 @@ namespace Assets.Scripts.Game.Common
         /// <param name="data">Class To Load</param>
         /// <param name="lv">Load to Level</param>
         /// <returns></returns>
-        public static T LevelLoad<T>(T data, int lv) where T : class
+        public static T LevelLoad<T>(int lv) where T : class
         {
             string json = File.ReadAllText(Application.dataPath + "/Resources/Levels/" + lv + ".json");
             T storeData = JsonUtility.FromJson<T>(json);

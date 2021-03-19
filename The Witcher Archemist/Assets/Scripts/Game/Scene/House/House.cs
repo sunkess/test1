@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Remoting.Contexts;
+using System.Security.Principal;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -14,11 +15,14 @@ using UnityScript.Steps;
 public class House : MonoBehaviour
 {
     public static House instance;
-    public HouseData houseData;
+    public LVHouseData lvHouseData;
+    public HouseData housedata;
 
     public GameObject tiles;
 
-    public Text store_lv;
+    public Transform doorPos;
+
+    public GameObject npcPrefab;
 
     private void Awake()
     {
@@ -32,29 +36,34 @@ public class House : MonoBehaviour
     }
     private void Start()
     {
-        GameData.NameToSprite();
-
-        houseData = SaveManager.LevelLoad<HouseData>(houseData, 1);
+        lvHouseData = SaveManager.LevelLoad<LVHouseData>(1);
 
         Set_StoreLv();
+
+        StartCoroutine(CreateNpc());
     }
 
+    IEnumerator CreateNpc()
+    {
+        yield return new WaitForSeconds(2f);
+        GameObject npc = Instantiate(npcPrefab, doorPos.position, Quaternion.identity);
+
+    }
     
 
     void GetExp()
     {
-        houseData.exp++;
+        lvHouseData.exp++;
 
-        if (houseData.exp >= houseData.nextExp)
+        if (lvHouseData.exp >= lvHouseData.nextExp)
         {
-            houseData = SaveManager.LevelLoad<HouseData>(houseData, Convert.ToInt32(houseData.lv) + 1);
+            lvHouseData = SaveManager.LevelLoad<LVHouseData>(Convert.ToInt32(lvHouseData.lv) + 1);
             Set_StoreLv();
         }
     }
 
     void Set_StoreLv()
     {
-        store_lv.text = houseData.lv;
         Set_Tile();
     }
 
@@ -65,18 +74,19 @@ public class House : MonoBehaviour
 
         GameObject storeTile = new GameObject("StoreTile");
 
-        Sprite[] tileGroundSprites = Resources.LoadAll<Sprite>("Tiles/shop_tile_v2");
-        Sprite[] tileWall = Resources.LoadAll<Sprite>("Tiles/shop_entire_tile");
+        int widthWall = 2;
 
-        for (int y = 0; y < houseData.y; y++)
+        lvHouseData.x = lvHouseData.x + widthWall;
+
+        for (int y = 0; y < lvHouseData.y; y++)
         {
-            for (int x = 0; x < houseData.x; x++)
+            for (int x = 0; x < lvHouseData.x; x++)
             {
                 GameObject tile = new GameObject("object");
                 tile.AddComponent<SpriteRenderer>();
                 #region ==============벽===================
 
-                if(x == 0 || x == houseData.x - 1)
+                if(x == 0 || x == lvHouseData.x - 1)
                 {
                     tile.name = "shop_entire_tile_Wall";
                     tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["shop_entire_tile_Wall"];
@@ -88,14 +98,14 @@ public class House : MonoBehaviour
                 #region ==============바닥=================
                 //================================바닥 타일====================================
                 //왼쪽 타일과 오른쪽 타일
-                if (x == 1 || x == houseData.x - 2)
+                if (x == 1 || x == lvHouseData.x - 2)
                 {
                     if (x == 1)
                     {
                         tile.name = "Left_Ground";
                         tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["Shop_Ground_Left"];
                     }
-                    else if (x == houseData.x - 2)
+                    else if (x == lvHouseData.x - 2)
                     {
                         tile.name = "Right_Ground";
                         tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["Shop_Ground_Right"];
@@ -104,12 +114,25 @@ public class House : MonoBehaviour
                     tile.AddComponent<Place_Tile>();
                 }
                 //중간 타일
-                else if ((1 < x && x < houseData.x - 2))
+                else if ((1 < x && x < lvHouseData.x - 2))
                 {
                     tile.name = "Middle_Ground";
                     tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["Shop_Ground_Middle"];
                     tile.AddComponent<BoxCollider2D>().isTrigger = true;
                     tile.AddComponent<Place_Tile>();
+                }
+
+                //문 위치
+                if (x == lvHouseData.x / 2 && y == 0)
+                {
+                    
+                    tile.name = "Door";
+                    tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["Shop_Ground_Middle"];
+                    tile.GetComponent<SpriteRenderer>().color = Color.green;
+                    tile.AddComponent<BoxCollider2D>().isTrigger = true;
+                    //tile.AddComponent<Place_Tile>();
+                    tile.AddComponent<Door>();
+                    doorPos = tile.transform;
                 }
 
 
@@ -127,9 +150,9 @@ public class House : MonoBehaviour
         int wall_height = 3;
 
         //벽 늘리기
-        for (int y = 0; y < wall_height; y++)
+        for (int y = 0; y < wall_height + 1; y++)
         {
-            for (int x = 0; x < houseData.x; x++)
+            for (int x = 0; x < lvHouseData.x; x++)
             {
                 GameObject tile = new GameObject("object");
                 tile.AddComponent<SpriteRenderer>();
@@ -137,7 +160,7 @@ public class House : MonoBehaviour
                 #region =================벽==============
 
                 //양쪽 벽
-                if(x == 0 || x == houseData.x - 1)
+                if(x == 0 || x == lvHouseData.x - 1 && y < wall_height + 1)
                 {
                     tile.name = "shop_entire_tile_Wall";
                     tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["shop_entire_tile_Wall"];
@@ -145,19 +168,26 @@ public class House : MonoBehaviour
                     tile.AddComponent<Tile>();
                 }
                 //뒷 벽
-                else if(x > 0 && x < houseData.x - 1)
+                else if(x > 0 && x < lvHouseData.x - 1 && y < wall_height + 1)
                 {
                     tile.name = "shop_entire_tile_Back";
                     tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["shop_entire_tile_Back"];
                     tile.AddComponent<BoxCollider2D>().isTrigger = false;
                     tile.AddComponent<Tile>();
                 }
+
+                if(y == wall_height)
+                {
+                    tile.name = "shop_entire_tile_Roof";
+                    tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["shop_entire_tile_Wall"];
+                    tile.AddComponent<BoxCollider2D>().isTrigger = false;
+                    tile.AddComponent<Tile>();
+                }
                 
                 #endregion
 
-
                 tile.GetComponent<SpriteRenderer>().sortingLayerName = "Tile";
-                tile.transform.position = new Vector2(x, y + houseData.y);
+                tile.transform.position = new Vector2(x, y + lvHouseData.y);
                 tile.transform.parent = storeTile.transform;
                 storeTile.transform.parent = transform;
             }
