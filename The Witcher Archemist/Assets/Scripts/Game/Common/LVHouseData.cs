@@ -12,4 +12,5 @@ public class LVHouseData
     public int nextExp;
     public int x;
     public int y;
+    public List<TileEdit> tiles = new List<TileEdit>();
 }

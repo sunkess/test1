@@ -1,7 +1,84 @@
 {
     "lv": "1",
     "exp": 0,
-    "nextExp": 500,
-    "x": 10,
-    "y": 10
+    "nextExp": 200,
+    "x": 5,
+    "y": 5,
+    "tiles": [
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 0
+        },
+        {
+            "tileNum": 1
+        },
+        {
+            "tileNum": 1
+        },
+        {
+            "tileNum": 0
+        }
+    ]
 }

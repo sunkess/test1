@@ -4,10 +4,18 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
+using UnityScript.Steps;
 
 public class LevelEditor : EditorWindow
 {
     public LVHouseData storedata = new LVHouseData();
+
+    public int currentChooseTile = 0;
+    public int tileWidth = 20;
+    public int prevWidth;
+    public int prevHeight;
+    public List<TileEdit> tileEdit = new List<TileEdit>();
+
 
     [MenuItem("Tools/CreateLevel", false, 0)]
     private static void init()
@@ -26,16 +34,20 @@ public class LevelEditor : EditorWindow
     private void OnGUI()
     {
         GUILayout.Toolbar(0, new string[] { "CreateLevel" });
+
         Draw();
     }
 
     public void Draw()
     {
+        
         GUILayout.Space(15);
 
         GUILayout.BeginHorizontal();
 
-        //GUILayout.Label("LV", GUILayout.Width(30));
+        prevWidth = storedata.x;
+        prevHeight = storedata.y;
+
         EditorGUILayout.LabelField(new GUIContent("LV", "레벨을 넣으세유"), GUILayout.Width(20));
 
         if (string.IsNullOrEmpty(storedata.lv))
@@ -85,20 +97,87 @@ public class LevelEditor : EditorWindow
 
         GUILayout.EndHorizontal();
 
+        GUILayout.BeginHorizontal();
+
+        if (GUILayout.Button("가구배치타일", GUILayout.Height(15)))
+        {
+            currentChooseTile = 0;
+        }
+
+        if (GUILayout.Button("가구배치타일X", GUILayout.Height(15)))
+        {
+            currentChooseTile = 1;
+        }
+
+        if (GUILayout.Button("출입문", GUILayout.Height(15)))
+        {
+            currentChooseTile = 2;
+
+        }
+
+        if (GUILayout.Button("연금술문", GUILayout.Height(15)))
+        {
+            currentChooseTile = 3;
+
+        }
+
+        GUILayout.EndHorizontal();
+
+        if(prevWidth != storedata.x || prevHeight != storedata.y)
+        {
+            storedata.tiles = new List<TileEdit>(storedata.x * storedata.y);
+
+            for (int i = 0; i < storedata.x * storedata.y; i++)
+            {
+                storedata.tiles.Add(new TileEdit());
+            }
+        }
+            
+        CreateTile();
+
+    }
+    
+    
+    private void CreateTile()
+    {
+        int idx = 0;
+
+        for (int y = 0; y < storedata.y; y++)
+        {
+            
+            EditorGUILayout.BeginHorizontal();
+            
+
+            for (int x = 0; x < storedata.x; x++)
+            {
+                GUI.backgroundColor = TileColor.colorArray[storedata.tiles[idx].tileNum];
+
+                
+                if (GUILayout.Button(Convert.ToString(storedata.tiles[idx].tileNum), GUILayout.Width(tileWidth)))
+                {
+                    storedata.tiles[idx].tileNum = currentChooseTile;
+                    tileEdit = storedata.tiles;
+                }
+                idx++;
+            }
+            EditorGUILayout.EndHorizontal();
+
+        }
+
     }
 
     private void Save()
     {
         string path = Application.dataPath + "/Resources/Levels/" + storedata.lv + ".json";
+
         string json = JsonUtility.ToJson(storedata, true);
+        
 
         if (storedata.lv != "0")
         {
-            bool window = false;
-
             if (File.Exists(path))
             {
-                window = EditorUtility.DisplayDialog("파일 존재", "이미 파일이 존재합니다 덮어 씁니까?", "확인", "취소");
+                bool window = EditorUtility.DisplayDialog("파일 존재", "이미 파일이 존재합니다 덮어 씁니까?", "확인", "취소");
                 if(window)
                 {
                     File.WriteAllText(path, json);
@@ -117,10 +196,6 @@ public class LevelEditor : EditorWindow
         {
             EditorUtility.DisplayDialog("저장실패", "저장 실패", "확인");
         }
-
-        
-
-
     }
 
     
@@ -143,10 +218,6 @@ public class LevelEditor : EditorWindow
         storedata.lv = string.Empty;
         storedata.nextExp = 0;
         storedata.x = 0;
-
         storedata.y = 0;
-
-
-
     }
 }
