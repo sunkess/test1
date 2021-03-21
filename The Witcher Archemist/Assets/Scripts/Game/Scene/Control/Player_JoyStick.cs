@@ -21,6 +21,8 @@ public class Player_JoyStick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     void Start()
     {
         Assert.IsNotNull(player);
+
+        is_Panel_Control = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -44,7 +46,7 @@ public class Player_JoyStick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public void Move()
     {
-        if (is_Panel_Control)
+        if (is_Panel_Control || !IngameManager.instance.playerUI.activeSelf)
             return;
 
         Move_Help.Set_Flip(player.GetComponent<SpriteRenderer>() ,input.normalized);

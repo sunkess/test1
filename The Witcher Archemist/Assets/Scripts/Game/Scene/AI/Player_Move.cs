@@ -7,6 +7,7 @@ public class Player_Move : AI
     [SerializeField]private float original_speed = 0.02f;
 
     public Player_JoyStick joystick;
+    public GameObject playerUI;
 
     public enum MoveType
     {
@@ -15,6 +16,11 @@ public class Player_Move : AI
     }
 
     public MoveType movetype;
+
+    protected override void Start()
+    {
+        //IngameManager.instance.playerUI = playerUI;
+    }
     // Update is called once per frame
     protected override void FixedUpdate()
     {
@@ -43,6 +49,8 @@ public class Player_Move : AI
         {
             base.FixedUpdate();
         }
+        
+        
 
     }
 }

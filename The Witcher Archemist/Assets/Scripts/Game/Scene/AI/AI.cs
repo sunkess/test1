@@ -1,21 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AI : MonoBehaviour
 {
     public Transform[] target_Position;
-    public Transform target;
+    private Transform target;
 
-    
-    private int target_Count = 0;
+    protected int targetNum = 0;
 
     protected float last_y;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        target = target_Position[target_Count];
+        target_Position[0] = IngameManager.instance.counter.transform.GetChild(0);
+        target = target_Position[0];
+        target_Position[1] = House.instance.doorPos;
+        targetNum = 0;
     }
 
     // Update is called once per frame
@@ -24,25 +27,20 @@ public class AI : MonoBehaviour
         AIMove();
     }
 
-    protected void AIMove()
+    protected virtual void AIMove()
     {
-        Vector2 dir = target_Position[target_Count].position - transform.position;
+        Vector2 dir = target_Position[targetNum].position - transform.position;
         float distance = dir.magnitude;
 
-
-        if (distance >= 1)
+        if(distance > 0.1f)
         {
             GetComponent<Rigidbody2D>().velocity = dir.normalized * 2;
-            //Move_Help.Set_Flip(GetComponent<SpriteRenderer>(), dir.normalized);
         }
         else
         {
-            target_Count++;
-            if (target_Count > target_Position.Length - 1)
-            {
-                target_Count = 0;
-            }
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
+
 
         if (transform.position.y != last_y)
         {

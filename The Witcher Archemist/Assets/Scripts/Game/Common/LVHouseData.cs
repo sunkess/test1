@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 [Serializable]
-public class StoreData
+public class LVHouseData
 {
     public string lv;
     public int exp;
