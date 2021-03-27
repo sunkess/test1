@@ -2,38 +2,62 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 using UnityScript.Steps;
 
 public class LevelEditor : EditorWindow
 {
+    public static LevelEditor instance;
     public LVHouseData storedata = new LVHouseData();
 
     public int currentChooseTile = 0;
-    public int tileWidth = 20;
+    public int tileWidth = 32;
     public int prevWidth;
     public int prevHeight;
+    public string textureKey = "";
     public List<TileEdit> tileEdit = new List<TileEdit>();
+
+    public Vector2 scrollPos;
 
 
     [MenuItem("Tools/CreateLevel", false, 0)]
     private static void init()
     {
-        var window = GetWindow(typeof(LevelEditor), true, "CreateLevel");
 
-        var width = 300;
-        var height = 500;
+        LevelEditor window =
+          (LevelEditor)EditorWindow.GetWindow(typeof(LevelEditor),
+                                                       utility: true,
+                                                       title: "CreateLevel");
+
+        var width = 500;
+        var height = 800;
 
         var x = (Screen.currentResolution.width - width) / 2;
         var y = (Screen.currentResolution.height - height) / 2;
 
         window.position = new Rect(x, y, width, height);
+
+        TileList.ClearTileList();
+
+        if(TileList.isEmptyImageList())
+        {
+            TileList.SetImageList();
+            Debug.Log("이미지 불러오기 세팅");
+        }
+        window.Show();
     }
+
+    
+
+    
 
     private void OnGUI()
     {
-        GUILayout.Toolbar(0, new string[] { "CreateLevel" });
+        instance = this;
+
+        GUILayout.Toolbar(0, new string[] { "CreatLevel" });
 
         Draw();
     }
@@ -90,6 +114,24 @@ public class LevelEditor : EditorWindow
             Save();
         }
 
+        if (GUILayout.Button("이미지 선택", GUILayout.Height(30)))
+        {
+            ChooseImageEditor window =
+          (ChooseImageEditor)EditorWindow.GetWindow(typeof(ChooseImageEditor),
+                                                       utility: true,
+                                                       title: "ChooseImage");
+
+            var width = 300;
+            var height = 500;
+
+            var x = (Screen.currentResolution.width - width) / 2;
+            var y = (Screen.currentResolution.height - height) / 2;
+
+            window.position = new Rect(x, y, width, height);
+
+            window.Show();
+        }
+
         if (GUILayout.Button("열기", GUILayout.Height(30)))
         {
             Load();
@@ -99,31 +141,33 @@ public class LevelEditor : EditorWindow
 
         GUILayout.BeginHorizontal();
 
-        if (GUILayout.Button("가구배치타일", GUILayout.Height(15)))
-        {
-            currentChooseTile = 0;
-        }
+        //if (GUILayout.Button("가구배치타일", GUILayout.Height(15)))
+        //{
+        //    currentChooseTile = 0;
+        //}
 
-        if (GUILayout.Button("가구배치타일X", GUILayout.Height(15)))
-        {
-            currentChooseTile = 1;
-        }
+        //if (GUILayout.Button("가구배치타일X", GUILayout.Height(15)))
+        //{
+        //    currentChooseTile = 1;
+        //}
 
-        if (GUILayout.Button("출입문", GUILayout.Height(15)))
-        {
-            currentChooseTile = 2;
+        //if (GUILayout.Button("출입문", GUILayout.Height(15)))
+        //{
+        //    currentChooseTile = 2;
 
-        }
+        //}
 
-        if (GUILayout.Button("연금술문", GUILayout.Height(15)))
-        {
-            currentChooseTile = 3;
+        //if (GUILayout.Button("연금술문", GUILayout.Height(15)))
+        //{
+        //    currentChooseTile = 3;
 
-        }
+        //}
 
         GUILayout.EndHorizontal();
 
-        if(prevWidth != storedata.x || prevHeight != storedata.y)
+        
+
+        if (prevWidth != storedata.x || prevHeight != storedata.y)
         {
             storedata.tiles = new List<TileEdit>(storedata.x * storedata.y);
 
@@ -132,38 +176,45 @@ public class LevelEditor : EditorWindow
                 storedata.tiles.Add(new TileEdit());
             }
         }
-            
+
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos,
+                                                      true,
+                                                      true);
+
         CreateTile();
+
+        EditorGUILayout.EndScrollView();
 
     }
     
     
     private void CreateTile()
     {
+        
+        //현재 인덱스
         int idx = 0;
-
+        
         for (int y = 0; y < storedata.y; y++)
         {
-            
             EditorGUILayout.BeginHorizontal();
-            
-
             for (int x = 0; x < storedata.x; x++)
             {
                 GUI.backgroundColor = TileColor.colorArray[storedata.tiles[idx].tileNum];
 
                 
-                if (GUILayout.Button(Convert.ToString(storedata.tiles[idx].tileNum), GUILayout.Width(tileWidth)))
+                if (GUILayout.Button(storedata.tiles[idx].texture, GUILayout.Width(48), GUILayout.Height(48)))
                 {
-                    storedata.tiles[idx].tileNum = currentChooseTile;
-                    tileEdit = storedata.tiles;
+                    if(textureKey != "")
+                    {
+                        storedata.tiles[idx].texture = TileList.textureToName[textureKey];
+
+                    }
                 }
+                
                 idx++;
             }
             EditorGUILayout.EndHorizontal();
-
         }
-
     }
 
     private void Save()
@@ -220,4 +271,6 @@ public class LevelEditor : EditorWindow
         storedata.x = 0;
         storedata.y = 0;
     }
+
+    
 }

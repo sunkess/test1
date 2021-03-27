@@ -64,6 +64,7 @@ public class House : MonoBehaviour
 
     void Set_StoreLv()
     {
+        
         Set_Tile();
     }
 
@@ -89,7 +90,7 @@ public class House : MonoBehaviour
                 if(x == 0 || x == lvHouseData.x - 1)
                 {
                     tile.name = "shop_entire_tile_Wall";
-                    tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["shop_entire_tile_Wall"];
+                    tile.GetComponent<SpriteRenderer>().sprite = TileList.spriteToName["shop_entire_tile_Wall"];
                     tile.AddComponent<BoxCollider2D>().isTrigger = false;
                 }
 
@@ -103,12 +104,12 @@ public class House : MonoBehaviour
                     if (x == 1)
                     {
                         tile.name = "Left_Ground";
-                        tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["Shop_Ground_Left"];
+                        tile.GetComponent<SpriteRenderer>().sprite = TileList.spriteToName["Shop_Ground_Left"];
                     }
                     else if (x == lvHouseData.x - 2)
                     {
                         tile.name = "Right_Ground";
-                        tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["Shop_Ground_Right"];
+                        tile.GetComponent<SpriteRenderer>().sprite = TileList.spriteToName["Shop_Ground_Right"];
                     }
                     tile.AddComponent<BoxCollider2D>().isTrigger = true;
                     tile.AddComponent<Place_Tile>();
@@ -117,7 +118,7 @@ public class House : MonoBehaviour
                 else if ((1 < x && x < lvHouseData.x - 2))
                 {
                     tile.name = "Middle_Ground";
-                    tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["Shop_Ground_Middle"];
+                    tile.GetComponent<SpriteRenderer>().sprite = TileList.spriteToName["Shop_Ground_Middle"];
                     tile.AddComponent<BoxCollider2D>().isTrigger = true;
                     tile.AddComponent<Place_Tile>();
                 }
@@ -127,7 +128,7 @@ public class House : MonoBehaviour
                 {
                     
                     tile.name = "Door";
-                    tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["Shop_Ground_Middle"];
+                    tile.GetComponent<SpriteRenderer>().sprite = TileList.spriteToName["Shop_Ground_Middle"];
                     tile.GetComponent<SpriteRenderer>().color = Color.green;
                     tile.AddComponent<BoxCollider2D>().isTrigger = true;
                     //tile.AddComponent<Place_Tile>();
@@ -163,7 +164,7 @@ public class House : MonoBehaviour
                 if(x == 0 || x == lvHouseData.x - 1 && y < wall_height + 1)
                 {
                     tile.name = "shop_entire_tile_Wall";
-                    tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["shop_entire_tile_Wall"];
+                    tile.GetComponent<SpriteRenderer>().sprite = TileList.spriteToName["shop_entire_tile_Wall"];
                     tile.AddComponent<BoxCollider2D>().isTrigger = false;
                     tile.AddComponent<Tile>();
                 }
@@ -171,7 +172,7 @@ public class House : MonoBehaviour
                 else if(x > 0 && x < lvHouseData.x - 1 && y < wall_height + 1)
                 {
                     tile.name = "shop_entire_tile_Back";
-                    tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["shop_entire_tile_Back"];
+                    tile.GetComponent<SpriteRenderer>().sprite = TileList.spriteToName["shop_entire_tile_Back"];
                     tile.AddComponent<BoxCollider2D>().isTrigger = false;
                     tile.AddComponent<Tile>();
                 }
@@ -179,7 +180,7 @@ public class House : MonoBehaviour
                 if(y == wall_height)
                 {
                     tile.name = "shop_entire_tile_Roof";
-                    tile.GetComponent<SpriteRenderer>().sprite = GameData.tileToName["shop_entire_tile_Wall"];
+                    tile.GetComponent<SpriteRenderer>().sprite = TileList.spriteToName["shop_entire_tile_Wall"];
                     tile.AddComponent<BoxCollider2D>().isTrigger = false;
                     tile.AddComponent<Tile>();
                 }
