@@ -15,9 +15,14 @@ public class GameManager : MonoBehaviour
         }
 
         instance = this;
+        if (TileList.isEmptyImageList())
+        {
+            TileList.SetSpriteList();
+        }
+        
     }
     private void Start()
     {
-        GameData.NameToSprite();
+        
     }
 }

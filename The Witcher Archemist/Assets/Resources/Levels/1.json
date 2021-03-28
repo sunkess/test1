@@ -1,7 +1,159 @@
 {
     "lv": "1",
     "exp": 0,
-    "nextExp": 500,
-    "x": 10,
-    "y": 10
+    "nextExp": 200,
+    "x": 5,
+    "y": 5,
+    "tiles": [
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15834
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15866
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15866
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15866
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15830
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15834
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15866
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15866
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15866
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15830
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15834
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15866
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15866
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15866
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15830
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15834
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15866
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15866
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15866
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15830
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15834
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15866
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15866
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15866
+            }
+        },
+        {
+            "tileNum": 0,
+            "texture": {
+                "instanceID": 15830
+            }
+        }
+    ]
 }
