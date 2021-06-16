@@ -36,12 +36,24 @@ public class House : MonoBehaviour
     }
     private void Start()
     {
-        lvHouseData = SaveManager.LevelLoad<LVHouseData>(1);
+        LoadLevelData();
 
         Set_StoreLv();
 
         StartCoroutine(CreateNpc());
     }
+
+    void LoadLevelData()
+    {
+        SaveManager storeData = new StoreData();
+        SaveManager playerData = new PlayerData();
+
+        //현재 세이브 된 level을 가져와야함.
+        int level = 1; //((PlayerData)playerData).LevelLoad<int>(1);
+
+        lvHouseData = ((StoreData)storeData).LevelLoad<LVHouseData>(level);
+    }
+
 
     IEnumerator CreateNpc()
     {
@@ -53,11 +65,12 @@ public class House : MonoBehaviour
 
     void GetExp()
     {
+        SaveManager storeData = new StoreData();
         lvHouseData.exp++;
 
         if (lvHouseData.exp >= lvHouseData.nextExp)
         {
-            lvHouseData = SaveManager.LevelLoad<LVHouseData>(Convert.ToInt32(lvHouseData.lv) + 1);
+            lvHouseData = ((StoreData)storeData).LevelLoad<LVHouseData>(Convert.ToInt32(lvHouseData.lv) + 1);
             Set_StoreLv();
         }
     }

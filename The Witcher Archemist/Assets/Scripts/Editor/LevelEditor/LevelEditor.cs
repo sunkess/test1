@@ -2,10 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
-using UnityScript.Steps;
 
 public class LevelEditor : EditorWindow
 {
@@ -25,7 +23,6 @@ public class LevelEditor : EditorWindow
     [MenuItem("Tools/CreateLevel", false, 0)]
     private static void init()
     {
-
         LevelEditor window =
           (LevelEditor)EditorWindow.GetWindow(typeof(LevelEditor),
                                                        utility: true,
@@ -140,28 +137,6 @@ public class LevelEditor : EditorWindow
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-
-        //if (GUILayout.Button("가구배치타일", GUILayout.Height(15)))
-        //{
-        //    currentChooseTile = 0;
-        //}
-
-        //if (GUILayout.Button("가구배치타일X", GUILayout.Height(15)))
-        //{
-        //    currentChooseTile = 1;
-        //}
-
-        //if (GUILayout.Button("출입문", GUILayout.Height(15)))
-        //{
-        //    currentChooseTile = 2;
-
-        //}
-
-        //if (GUILayout.Button("연금술문", GUILayout.Height(15)))
-        //{
-        //    currentChooseTile = 3;
-
-        //}
 
         GUILayout.EndHorizontal();
 

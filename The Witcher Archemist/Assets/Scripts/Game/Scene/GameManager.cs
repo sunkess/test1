@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    
+
     private void Awake()
     {
         if (instance != null)
@@ -15,14 +17,17 @@ public class GameManager : MonoBehaviour
         }
 
         instance = this;
+
         if (TileList.isEmptyImageList())
         {
             TileList.SetSpriteList();
         }
-        
+        SQLDataBase.ConnDB();
     }
+
+    
     private void Start()
     {
-        
+        SQLDataBase.DataRead("Select * FROM ItemTable");
     }
 }

@@ -18,11 +18,12 @@ public class TileList
     }
     public static void SetSpriteList()
     {
+        Methods method = new Methods();
         object[] sprites = Resources.LoadAll("Tiles");
 
         for (int i = 0; i < sprites.Length; i++)
         {
-            string spriteName = Methods.String_Cut_Char(Convert.ToString(sprites[i]), ' ');
+            string spriteName = method.String_Cut_Char(Convert.ToString(sprites[i]), ' ');
             spriteToName.Add(spriteName, sprites[i] as Sprite);
         }
         //Debug.Log(spriteToName["shop_entire_tile_Wall"]);
@@ -30,11 +31,12 @@ public class TileList
 
     public static void SetTextureList()
     {
+        Methods method = new Methods();
         object[] textures = Resources.LoadAll<Texture>("EditorTiles/Level");
 
         for (int i = 0; i < textures.Length; i++)
         {
-            string textureName = Methods.String_Cut_Char(Convert.ToString(textures[i]), ' ');
+            string textureName = method.String_Cut_Char(Convert.ToString(textures[i]), ' ');
             //Debug.Log(textureName);
 
             textureToName.Add(textureName, textures[i] as Texture);

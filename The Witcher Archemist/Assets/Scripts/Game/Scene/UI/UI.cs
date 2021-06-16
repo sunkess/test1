@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class sizetest : MonoBehaviour
+public class UI : MonoBehaviour
 {
+    public UIEnum popEnum;
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(GetComponent<SpriteRenderer>().bounds.size);
+        PopUpSystem popSys = new PopUpSystem();
+        popSys.PopupType(popEnum, gameObject);
     }
 }
